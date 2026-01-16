@@ -1,0 +1,305 @@
+/*
+  ColorfulTodo – Visual Design System
+  Implements light/dark themes, layout, component styling, animations, and responsive behavior.
+*/
+
+/* ------------------------------------------------------------
+   Theme Variables
+   ------------------------------------------------------------ */
+:root {
+  /* Light theme defaults */
+  --bg-color: #f5f7fa;
+  --text-color: #2c3e50;
+  --primary-hue: 210; /* blue hue for focus outlines */
+  --accent-color: #e74c3c; /* vibrant accent for buttons/toggles */
+  --task-bg: #ffffff;
+  --task-bg-completed: #e0e0e0;
+  --border-radius: 0.5rem;
+  --shadow: rgba(0, 0, 0, 0.1) 0 2px 4px;
+}
+
+/* Dark theme overrides */
+.theme-dark {
+  --bg-color: #1e1e2f;
+  --text-color: #e0e0e0;
+  --primary-hue: 210; /* same hue works on dark */
+  --accent-color: #ff6f61;
+  --task-bg: #2a2a3d;
+  --task-bg-completed: #3b3b55;
+  --shadow: rgba(0, 0, 0, 0.5) 0 2px 6px;
+}
+
+/* ------------------------------------------------------------
+   Global Reset & Box‑Sizing
+   ------------------------------------------------------------ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0.4s, color 0.4s;
+}
+
+/* ------------------------------------------------------------
+   App Container
+   ------------------------------------------------------------ */
+#app {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  background: var(--bg-color);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+}
+
+/* ------------------------------------------------------------
+   Header
+   ------------------------------------------------------------ */
+#app > header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+#app > header h1 {
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+
+#theme-toggle {
+  background: var(--accent-color);
+  border: none;
+  color: #fff;
+  font-size: 1.2rem;
+  padding: 0.4rem 0.6rem;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+#theme-toggle:hover {
+  background: hsl(var(--primary-hue), 70%, 55%);
+}
+
+/* ------------------------------------------------------------
+   New‑Task Form
+   ------------------------------------------------------------ */
+#new-task-form {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+#new-task-input {
+  flex: 1;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+  transition: border-color 0.2s;
+}
+
+#new-task-input:focus {
+  outline: none;
+  border-color: hsl(var(--primary-hue), 70%, 55%);
+  box-shadow: 0 0 0 2px hsla(var(--primary-hue), 70%, 55%, 0.2);
+}
+
+#new-task-form button[type="submit"] {
+  background: var(--accent-color);
+  color: #fff;
+  border: none;
+  padding: 0.6rem 1rem;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.3s, transform 0.1s;
+}
+
+#new-task-form button[type="submit"]:hover {
+  background: hsl(var(--primary-hue), 70%, 55%);
+}
+
+#new-task-form button[type="submit"]:active {
+  transform: scale(0.98);
+}
+
+/* ------------------------------------------------------------
+   Toolbar (Filters + Search)
+   ------------------------------------------------------------ */
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+#filters {
+  display: flex;
+  gap: 0.3rem;
+}
+
+#filters button {
+  background: transparent;
+  border: 1px solid var(--accent-color);
+  color: var(--accent-color);
+  padding: 0.3rem 0.6rem;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: background 0.3s, color 0.3s;
+}
+
+#filters button.active,
+#filters button:hover {
+  background: var(--accent-color);
+  color: #fff;
+}
+
+#search-input {
+  flex: 1;
+  min-width: 150px;
+  padding: 0.5rem 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: var(--border-radius);
+  font-size: 0.95rem;
+}
+
+/* ------------------------------------------------------------
+   Task List
+   ------------------------------------------------------------ */
+#task-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+#task-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--task-bg);
+  padding: 0.6rem 0.8rem;
+  margin-bottom: 0.5rem;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  animation: fadeIn 0.3s ease;
+}
+
+#task-list li.completed {
+  background: var(--task-bg-completed);
+  opacity: 0.7;
+  text-decoration: line-through;
+}
+
+/* Checkbox styling */
+#task-list li input[type="checkbox"] {
+  width: 1.2rem;
+  height: 1.2rem;
+  accent-color: var(--accent-color);
+  margin-right: 0.8rem;
+  cursor: pointer;
+}
+
+#task-list li .task-text {
+  flex: 1;
+  margin-left: 0.5rem;
+}
+
+#task-list li .actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-left: 0.5rem;
+}
+
+#task-list li .actions button {
+  background: transparent;
+  border: none;
+  color: var(--text-color);
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 0.2rem;
+  transition: color 0.2s;
+}
+
+#task-list li .actions button:hover {
+  color: var(--accent-color);
+}
+
+/* ------------------------------------------------------------
+   Animations
+   ------------------------------------------------------------ */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Placeholder animation for drag‑and‑drop (simple slide) */
+@keyframes slideUp {
+  from { transform: translateY(10px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* ------------------------------------------------------------
+   Responsive Design
+   ------------------------------------------------------------ */
+@media (max-width: 600px) {
+  #app {
+    margin: 0.5rem;
+    padding: 1rem;
+  }
+
+  #app > header h1 {
+    font-size: 1.5rem;
+  }
+
+  #new-task-form {
+    flex-direction: column;
+  }
+
+  #new-task-form button[type="submit"] {
+    width: 100%;
+  }
+
+  .toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  #filters {
+    justify-content: center;
+  }
+
+  #search-input {
+    width: 100%;
+  }
+
+  #task-list li {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  #task-list li .actions {
+    margin-top: 0.5rem;
+  }
+}
+
+/* ------------------------------------------------------------
+   Utility Classes
+   ------------------------------------------------------------ */
+.hidden { display: none !important; }
+.active { 
+  font-weight: 600;
+}
+:root, .theme-dark {
+  transition: background-color 0.4s, color 0.4s, var(--bg-color) 0.4s, var(--text-color) 0.4s;
+}

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ColorfulTodo</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <div id="app" class="theme-light">
+    <header>
+      <h1>ColorfulTodo</h1>
+      <button id="theme-toggle" aria-label="Toggle theme">🌙/☀️</button>
+    </header>
+
+    <form id="new-task-form">
+      <input id="new-task-input" placeholder="What needs to be done?" autocomplete="off" />
+      <button type="submit">Add</button>
+    </form>
+
+    <div class="toolbar">
+      <div id="filters">
+        <button data-filter="all" class="active">All</button>
+        <button data-filter="active">Active</button>
+        <button data-filter="completed">Completed</button>
+      </div>
+      <input id="search-input" placeholder="Search tasks..." />
+    </div>
+
+    <ul id="task-list" class="draggable-list"></ul>
+
+    <footer>
+      <p>Press <kbd>Enter</kbd> to add, <kbd>Esc</kbd> to cancel, <kbd>Ctrl+F</kbd> to focus search.</p>
+    </footer>
+  </div>
+</body>
+</html>

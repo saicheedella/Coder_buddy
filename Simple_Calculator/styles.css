@@ -1,0 +1,117 @@
+/* Root variables for colors and font sizes */
+:root {
+    --color-bg: #f9f9f9;
+    --color-primary: #4a90e2;
+    --color-primary-dark: #357ab8;
+    --color-operator: #ff9500;
+    --color-operator-dark: #e08a00;
+    --color-display-bg: #ffffff;
+    --color-display-text: #333333;
+    --color-btn-bg: #e0e0e0;
+    --color-btn-bg-hover: #d5d5d5;
+    --color-btn-text: #000000;
+    --color-btn-operator-bg: var(--color-operator);
+    --color-btn-operator-bg-hover: var(--color-operator-dark);
+    --color-btn-operator-text: #ffffff;
+    
+    --font-size-display: 2rem;
+    --font-size-btn: 1.5rem;
+    --font-size-btn-mobile: 1.2rem;
+    --font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Calculator container */
+.calculator {
+    max-width: 400px;
+    margin: 2rem auto;
+    padding: 1.5rem;
+    background: var(--color-bg);
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    font-family: var(--font-family);
+}
+
+/* Display */
+.display {
+    width: 100%;
+    font-size: var(--font-size-display);
+    text-align: right;
+    padding: 0.5rem 0.75rem;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    background: var(--color-display-bg);
+    color: var(--color-display-text);
+    box-sizing: border-box;
+    margin-bottom: 1rem;
+}
+
+/* Buttons grid */
+.buttons-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(5, minmax(50px, auto));
+    gap: 0.75rem;
+}
+
+/* Button base style */
+.btn {
+    background: var(--color-btn-bg);
+    color: var(--color-btn-text);
+    font-size: var(--font-size-btn);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.1s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+}
+
+.btn:hover,
+.btn:focus {
+    background: var(--color-btn-bg-hover);
+    outline: none;
+    transform: translateY(-2px);
+}
+
+/* Operator buttons – can be given the .operator class */
+.btn.operator {
+    background: var(--color-btn-operator-bg);
+    color: var(--color-btn-operator-text);
+}
+
+.btn.operator:hover,
+.btn.operator:focus {
+    background: var(--color-btn-operator-bg-hover);
+}
+
+/* Ensure the equals button spans full width (already set inline) */
+button[data-value="="] {
+    grid-column: span 4;
+    background: var(--color-primary);
+    color: #fff;
+    font-weight: bold;
+}
+
+button[data-value="="]:hover,
+button[data-value="="]:focus {
+    background: var(--color-primary-dark);
+}
+
+/* Media query for mobile */
+@media (max-width: 600px) {
+    .calculator {
+        padding: 1rem;
+    }
+    .buttons-grid {
+        gap: 0.5rem;
+        grid-template-rows: repeat(5, minmax(40px, auto));
+    }
+    .btn {
+        font-size: var(--font-size-btn-mobile);
+    }
+}
